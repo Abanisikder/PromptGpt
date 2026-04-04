@@ -1,40 +1,45 @@
+const express = require('express');
 const Groq = require("groq-sdk");
+const cors = require('cors');
 require('dotenv').config();
 
-// Groq ক্লায়েন্ট সেটআপ
+const app = express();
+app.use(express.json());
+app.use(cors()); // ফ্রন্টএন্ড থেকে রিকোয়েস্ট আসার জন্য জরুরি
+
 const groq = new Groq({
-    apiKey: process.env.GROQ_API_KEY, // নিশ্চিত হোন .env এ এই নামেই আছে
+    apiKey: process.env.GROQ_API_KEY,
 });
 
-async function testGroqConnection() {
-    console.log("Connecting to Groq Cloud...");
-
+// এআই চ্যাটের জন্য মেইন রাউট
+app.post('/api/chat', async (req, res) => {
     try {
+        const { message } = req.body; // ফ্রন্টএন্ড থেকে আসা মেসেজ
+
         const chatCompletion = await groq.chat.completions.create({
             messages: [
                 {
+                    role: "system",
+                    content: "You are a helpful coding assistant."
+                },
+                {
                     role: "user",
-                    content: "Is your API working? Answer in one short sentence.",
+                    content: message,
                 },
             ],
-            // Llama 3.1 বর্তমানে খুব ভালো কাজ করে
             model: "llama-3.1-8b-instant",
         });
 
-        // আউটপুট প্রিন্ট করা
-        const responseText = chatCompletion.choices[0]?.message?.content;
-        console.log("------------------------------");
-        console.log("Groq says:", responseText);
-        console.log("------------------------------");
-        console.log("Success! Your API is working perfectly.");
+        const reply = chatCompletion.choices[0]?.message?.content;
+        res.json({ reply }); // ফ্রন্টএন্ডে উত্তর পাঠানো
 
     } catch (error) {
         console.error("Groq Error:", error.message);
-        if (error.message.includes("401")) {
-            console.log("Tip: Your API Key might be wrong. Check your .env file.");
-        }
+        res.status(500).json({ error: "Something went wrong with the AI." });
     }
-}
+});
 
-// ফাংশনটি রান করা
-testGroqConnection();
+const PORT = 8080;
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
