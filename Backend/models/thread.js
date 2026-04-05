@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Message from "./message.js"; // আপনার Message মডেলটি ইম্পোর্ট করুন
+import Message from "./message.js"; 
 
 const ThreadSchema = new mongoose.Schema({
     threadId: {
@@ -11,7 +11,7 @@ const ThreadSchema = new mongoose.Schema({
         type: String,
         default: "New chat",
     },
-    // সরাসরি Message মডেলের schema ব্যবহার করা হচ্ছে
+    
     messages: [Message.schema], 
     
 }, { timestamps: true });

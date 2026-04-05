@@ -1,4 +1,13 @@
 {
+  "name": "promptgpt-backend",
+  "version": "1.0.0",
+  "description": "Backend for PromptGpt project",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.6",

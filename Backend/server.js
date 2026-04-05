@@ -1,20 +1,22 @@
-const express = require('express');
-const Groq = require("groq-sdk");
-const cors = require('cors');
-require('dotenv').config();
+import express from 'express';
+import Groq from 'groq-sdk';
+import cors from 'cors';
+import 'dotenv/config';
+import mongoose from 'mongoose'; 
 
 const app = express();
+
 app.use(express.json());
-app.use(cors()); // ফ্রন্টএন্ড থেকে রিকোয়েস্ট আসার জন্য জরুরি
+app.use(cors());
 
 const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY,
 });
 
-// এআই চ্যাটের জন্য মেইন রাউট
+
 app.post('/api/chat', async (req, res) => {
     try {
-        const { message } = req.body; // ফ্রন্টএন্ড থেকে আসা মেসেজ
+        const { message } = req.body;
 
         const chatCompletion = await groq.chat.completions.create({
             messages: [
@@ -31,15 +33,25 @@ app.post('/api/chat', async (req, res) => {
         });
 
         const reply = chatCompletion.choices[0]?.message?.content;
-        res.json({ reply }); // ফ্রন্টএন্ডে উত্তর পাঠানো
+        res.json({ reply });
 
     } catch (error) {
         console.error("Groq Error:", error.message);
         res.status(500).json({ error: "Something went wrong with the AI." });
     }
 });
+const connectDB=async()=>{
+    try{
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log("database is connected successfully");
+    }
+    catch(err){
+        console.log("fail to connect with database",err);
+    }
+}
 
 const PORT = 8080;
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
+    connectDB();
 });
