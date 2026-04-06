@@ -11,37 +11,37 @@ app.use(express.json());
 app.use(cors());
 app.use("/api",chatRoutes);
 
-const groq = new Groq({
-    apiKey: process.env.GROQ_API_KEY,
-});
+// const groq = new Groq({
+//     apiKey: process.env.GROQ_API_KEY,
+// });
 
 
-app.post('/api/chat', async (req, res) => {
-    try {
-        const { message } = req.body;
+// app.post('/api/chat', async (req, res) => {
+//     try {
+//         const { message } = req.body;
 
-        const chatCompletion = await groq.chat.completions.create({
-            messages: [
-                {
-                    role: "system",
-                    content: "You are a helpful coding assistant."
-                },
-                {
-                    role: "user",
-                    content: message,
-                },
-            ],
-            model: "llama-3.1-8b-instant",
-        });
+//         const chatCompletion = await groq.chat.completions.create({
+//             messages: [
+//                 {
+//                     role: "system",
+//                     content: "You are a helpful coding assistant."
+//                 },
+//                 {
+//                     role: "user",
+//                     content: message,
+//                 },
+//             ],
+//             model: "llama-3.1-8b-instant",
+//         });
 
-        const reply = chatCompletion.choices[0]?.message?.content;
-        res.json({ reply });
+//         const reply = chatCompletion.choices[0]?.message?.content;
+//         res.json({ reply });
 
-    } catch (error) {
-        console.error("Groq Error:", error.message);
-        res.status(500).json({ error: "Something went wrong with the AI." });
-    }
-});
+//     } catch (error) {
+//         console.error("Groq Error:", error.message);
+//         res.status(500).json({ error: "Something went wrong with the AI." });
+//     }
+// });
 const connectDB=async()=>{
     try{
         await mongoose.connect(process.env.MONGODB_URI);

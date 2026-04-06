@@ -1,5 +1,6 @@
 import express from "express"
 import Thread from "../models/thread.js";
+import { getGroqResponse } from "../utils/openAi.js";
 
 const router = express.Router();
 
@@ -60,6 +61,33 @@ router.delete("/thread/:threadId",async(req,res)=>{
         console.log(err);
         res.status(500).json({ error: 'something went wrong' });
 
+    }
+})
+router.post("/chat", async (req, res) => {
+    const { threadId, message } = req.body;
+    if (!threadId || !message) {
+        return res.status(400).json({ error: 'missing the requirement' });
+    }
+
+    try {
+        let thread = await Thread.findOne({ threadId });
+        if (!thread) {
+            thread = new Thread({
+                threadId,
+                title: message,
+                messages: [{ role: "user", content: message }],
+            });
+        } else {
+            thread.messages.push({ role: "user", content: message });
+        }
+        const assistantReply = await getGroqResponse(message);
+        thread.messages.push({ role: "system", content: assistantReply });
+
+        const response = await thread.save();
+        res.json({ reply: assistantReply });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'something went wrong' });
     }
 })
 
