@@ -4,7 +4,14 @@ import "./Sidebar.css"
 
 function Sidebar() {
   return (
-    <div> Sidebar</div>
+    <section className='sidebar'>
+      <button>
+        <img src="src/assets/promptgpt.png" alt="promptgpt logo"></img>
+        <i class="fa-regular fa-pen-to-square"></i>
+      </button>
+      
+
+    </section>
   )
 }
 
