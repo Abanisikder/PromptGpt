@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext ,useState} from "react";
 import "./Chatwindow.css";
 import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
+import { ClipLoader } from 'react-spinners';
 
 function Chatwindow() {
+  const [loading, setLoading] = useState(false);
   const { prompt, setPrompt, reply, setReply, currThread } =
     useContext(MyContext);
   const getReply = async () => {
+    setLoading(true);
     const options = {
       method: "post",
       headers: {
@@ -24,6 +27,7 @@ function Chatwindow() {
     } catch (err) {
       console.log(err);
     }
+    setLoading(false);
   };
   return (
     <div className="chatwindow">
@@ -38,6 +42,7 @@ function Chatwindow() {
         </div>
       </div>
       <Chat />
+      <ClipLoader loading={loading}/>
       <div className="inputbox">
         <div className="box">
           <input
