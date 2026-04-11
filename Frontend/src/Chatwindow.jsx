@@ -23,7 +23,7 @@ function Chatwindow() {
     try {
       const response = await fetch("http://localhost:8080/api/chat", options);
       const res=await response.json();
-      console.log(res);
+      console.log(res.reply);
     } catch (err) {
       console.log(err);
     }
@@ -42,7 +42,7 @@ function Chatwindow() {
         </div>
       </div>
       <Chat />
-      <ClipLoader loading={loading}/>
+      <ClipLoader loading={loading} color="white"/>
       <div className="inputbox">
         <div className="box">
           <input
