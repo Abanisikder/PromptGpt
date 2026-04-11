@@ -11,8 +11,10 @@ function App() {
   const[prompt,setPrompt]=useState("");
   const[reply,setReply]=useState(null);
   const[currThread,setCurrThread]=useState(uuidv1());
+  const[preChat,setPreChat]=useState([]);
+  const[newChat,setNewChat]=useState(true);
   const providerValues={
-    prompt,setPrompt,reply,setReply,currThread,setCurrThread
+    prompt,setPrompt,reply,setReply,currThread,setCurrThread,preChat,setPreChat,newChat,setNewChat
   };
   
 
