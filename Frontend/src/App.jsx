@@ -13,8 +13,9 @@ function App() {
   const[currThread,setCurrThread]=useState(uuidv1());
   const[preChat,setPreChat]=useState([]);
   const[newChat,setNewChat]=useState(true);
+  const[allThread,setAllThread]=useState([]);
   const providerValues={
-    prompt,setPrompt,reply,setReply,currThread,setCurrThread,preChat,setPreChat,newChat,setNewChat
+    prompt,setPrompt,reply,setReply,currThread,setCurrThread,preChat,setPreChat,newChat,setNewChat,allThread,setAllThread
   };
   
 
