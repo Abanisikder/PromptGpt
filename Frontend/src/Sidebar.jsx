@@ -4,10 +4,11 @@ import React, { useContext, useEffect } from 'react';
 import "./Sidebar.css";
 import logo from "./assets/promptgpt.png";
 import { MyContext } from './MyContext';
+import { v1 as uuidv1 } from 'uuid';
 
 function Sidebar() {
 
-  const { allThread, setAllThread, currThread } = useContext(MyContext);
+  const { allThread, setAllThread, currThread,setNewChat,setPrompt,setReply,setCurrThread,setPreChat } = useContext(MyContext);
 
   const getAllThread = async () => {
     try {
@@ -37,9 +38,19 @@ function Sidebar() {
     
   }, [currThread]);
 
+  const createNewChat=()=>{
+    setNewChat(true);
+    setPrompt("");
+    setReply(null);
+    setPreChat([]);
+    setCurrThread(uuidv1());
+
+
+  };
+
   return (
     <section className='sidebar'>
-      <button>
+      <button onClick={createNewChat}>
         <img src={logo} alt="promptgpt logo" className='logo' />
         <span> <i className="fa-regular fa-pen-to-square"></i></span>
       </button>
