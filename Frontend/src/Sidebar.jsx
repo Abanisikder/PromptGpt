@@ -42,7 +42,7 @@ function Sidebar() {
   const handleThreadClick = async (threadId) => {
     try {
       // 1. Fetch the messages for this specific thread
-      const response = await fetch(`http://localhost:8080/api/messages/${threadId}`);
+      const response = await fetch(`http://localhost:8080/api/thread/${threadId}`);
       if (!response.ok) throw new Error("Failed to fetch chat history");
       
       const messages = await response.json();
@@ -66,6 +66,16 @@ function Sidebar() {
     setPreChat([]);
     setCurrThread(uuidv1());
   };
+  const deleteThread=async ()=>{
+    try{
+      const response= await fetch(`http://localhost:8080/api/thread/${threadId}`,{method:"DELETE"});
+      const res=await response.json();
+      console.log(res);
+
+    }catch(e){
+      console.log(e);
+    }
+  }
 
   return (
     <section className='sidebar'>
@@ -85,6 +95,14 @@ function Sidebar() {
                 className={currThread === thread.threadId ? 'active' : ''} // Optional: highlight active
               >
                 {thread.title}
+                <i className="fa-solid fa-trash"
+                onClick={(e)=>{
+                  e.stopPropagation();
+                  deleteThread(thread.threadId);
+                }}
+                >
+
+                </i>
               </li>
             ))
           ) : (

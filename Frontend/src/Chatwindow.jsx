@@ -86,7 +86,7 @@ function Chatwindow() {
             onKeyDown={(e) => e.key === "Enter" && getReply()}
           />
           <span className="btn" id="submit" onClick={getReply}>
-           <i class="fa-regular fa-paper-plane"></i>
+           <i className="fa-regular fa-paper-plane"></i>
           </span>
         </div>
         <div className="info">

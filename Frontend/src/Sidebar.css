@@ -62,3 +62,52 @@ button span {
     text-align: center;
     border-top: solid .25px rgba(255,255,255,0.5);
 }
+/* Container for the list */
+.history ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Style for each thread item (li) */
+.history li {
+  display: flex; /* Use Flexbox to align title and icon */
+  justify-content: space-between; /* Pushes the trash icon to the far right */
+  align-items: center;
+  padding: 10px 12px;
+  margin: 4px 0;
+  border-radius: 6px;
+  color: #ececf1;
+  transition: background-color 0.2s ease;
+  position: relative;
+  font-size: 0.9rem;
+}
+
+/* Hover and Active states for the thread item */
+.history li:hover {
+  background-color: #2a2b32;
+}
+
+.history li.active {
+  background-color: #343541;
+}
+
+/* Style for the trash icon */
+.fa-trash {
+  color: #8e8ea0; /* Muted color by default */
+  font-size: 0.85rem;
+  padding: 5px;
+  display: none; /* Hidden by default */
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+/* Reveal the trash icon only when hovering over the parent li */
+.history li:hover .fa-trash {
+  display: block;
+}
+
+/* Change icon color to red when hovering directly over it */
+.fa-trash:hover {
+  color: #ff4d4d;
+}
