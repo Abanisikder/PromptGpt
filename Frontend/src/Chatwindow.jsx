@@ -6,10 +6,11 @@ import { ClipLoader } from 'react-spinners';
 
 function Chatwindow() {
   const [loading, setLoading] = useState(false);
-  const { prompt, setPrompt, reply, setReply, currThread ,preChat,setPreChat} =
+  const { prompt, setPrompt, reply, setReply, currThread ,preChat,setPreChat,setNewChat} =
     useContext(MyContext);
   const getReply = async () => {
     setLoading(true);
+    setNewChat(false);
     const options = {
       method: "post",
       headers: {
