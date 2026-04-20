@@ -36,7 +36,7 @@ function Sidebar() {
 
   useEffect(() => {
     getAllThread();
-  }, [currThread]);
+  }, []);
 
   // --- NEW FUNCTION: Fetch and Switch to Previous Chat ---
   const handleThreadClick = async (threadId) => {
@@ -66,16 +66,22 @@ function Sidebar() {
     setPreChat([]);
     setCurrThread(uuidv1());
   };
-  const deleteThread=async ()=>{
+  const deleteThread=async (threadId)=>{
     try{
       const response= await fetch(`http://localhost:8080/api/thread/${threadId}`,{method:"DELETE"});
       const res=await response.json();
       console.log(res);
+      setAllThread(prev => prev.filter(thread => thread.threadId !== threadId));
+      if(threadId===currThread)
+      {
+        createNewChat();
+      }
 
-    }catch(e){
-      console.log(e);
+    }catch(err){
+      console.log(err);
     }
   }
+ 
 
   return (
     <section className='sidebar'>

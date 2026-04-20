@@ -7,6 +7,7 @@ import { ClipLoader } from 'react-spinners';
 
 function Chatwindow() {
   const [loading, setLoading] = useState(false);
+  const[isOpen,setIsOpen]=useState(false);
   const { 
     prompt, 
     setPrompt, 
@@ -57,6 +58,10 @@ function Chatwindow() {
     }
   }, [reply]);
 
+  const handleProfileClick=()=>{
+    setIsOpen(!isOpen);
+  }
+
   return (
     <div className="chatwindow">
       <div className="navbar">
@@ -64,11 +69,19 @@ function Chatwindow() {
           PromtGpt &nbsp;<i className="fa-solid fa-angle-down"></i>
         </span>
         <div className="user">
-          <span className="usericon">
+          <span className="usericon" onClick={handleProfileClick}>
             <i className="fa-solid fa-user"></i>
           </span>
         </div>
       </div>
+      {
+        isOpen &&
+        <div className="dropdown">
+            <div className="dropdownItem"><i class="fa-solid fa-gear"></i>Settings </div>
+             <div className="dropdownItem"><i class="fa-solid fa-cloud-arrow-up"></i>Up Grade Plan </div>
+              <div className="dropdownItem"><i class="fa-solid fa-right-from-bracket"></i>Log Out </div>
+        </div>
+      }
       
       {/* The Chat component displays the contents of 'preChat' */}
       <Chat /> 
